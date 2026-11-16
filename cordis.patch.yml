@@ -1,0 +1,6 @@
+# dsh-mcp-cost bundle layer
+# 这个文件由包自己提供：装成 bundle 时（dsh plugin add dsh-mcp-cost），
+# 加载器把下面的条目自动插进 profile，不需要用户手改 cordis.patch.yml。
+- insert:
+    - id: mcp-cost
+      name: dsh-mcp-cost

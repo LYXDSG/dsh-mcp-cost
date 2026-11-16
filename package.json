@@ -1,0 +1,52 @@
+{
+  "name": "dsh-mcp-cost",
+  "version": "0.3.0",
+  "description": "MCP cost panel for DeepSeek Harness: list every MCP server in the profile, toggle it hot without restarting, see its runtime phase, and estimate the input tokens each one costs.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-modules"
+      ]
+    }
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/engine/*.mjs",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "mcp",
+    "mcp-server",
+    "token-saver"
+  ],
+  "license": "MIT",
+  "author": "LYXDSG",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LYXDSG/dsh-mcp-cost.git"
+  },
+  "homepage": "https://github.com/LYXDSG/dsh-mcp-cost#readme",
+  "bugs": {
+    "url": "https://github.com/LYXDSG/dsh-mcp-cost/issues"
+  }
+}
