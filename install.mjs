@@ -88,7 +88,7 @@ function validate(text) {
 }
 
 /** 清掉本脚本历史上写进 profile patch 的 insert 块（旧包名的一并清）。 */
-function stripOurBlocks(text) {
+function stripOurBlocks(text, removeCurrent = false) {
   const lines = text.split('\n');
   const kept = [];
   let index = 0;
@@ -120,7 +120,8 @@ function stripOurBlocks(text) {
         }
         if (/^\s+name:\s*\S+/.test(line)) {
           const name = trimmed.slice(trimmed.indexOf('name:') + 'name:'.length).trim().replace(/^['"]|['"]$/g, '');
-          matched = LEGACY_PACKAGE_NAMES.includes(name);
+          // 不是 bundle 模式时，已有的「当前包名」块要留着，否则每次 install 都会重写一遍文件
+          matched = LEGACY_PACKAGE_NAMES.includes(name) && (removeCurrent || name !== PKG_NAME);
           cursor += 1;
           break;
         }
@@ -217,7 +218,7 @@ if (options.dryRun) console.log('   （dry-run：不会真的写文件）');
 let patchChanged = false;
 const bundleMode = bundleSelected();
 const original = existsSync(patchPath) ? readFileSync(patchPath, 'utf8') : '[]\n';
-const stripped = stripOurBlocks(original);
+const stripped = stripOurBlocks(original, bundleMode);
 const plan = bundleMode ? { text: stripped.text, changed: stripped.removed > 0 } : insertPatchEntry(stripped.text);
 
 if (options.dryRun) {

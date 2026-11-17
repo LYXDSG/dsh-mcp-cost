@@ -1,6 +1,6 @@
 {
   "name": "dsh-mcp-cost",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "MCP cost panel for DeepSeek Harness: list every MCP server in the profile, toggle it hot without restarting, see its runtime phase, and estimate the input tokens each one costs.",
   "type": "module",
   "main": "lib/index.js",

@@ -12,7 +12,7 @@ MCP tool definitions are sent with **every** request. Turning off a server you a
 - **Every MCP entry, identified properly.** Rows are selected by `moduleName === '@deepseek-ai/dsh-mcp-client'`, not by id prefix. Each row shows `serverName`, `patchId`, transport, endpoint, call timeout, whether a startup failure blocks boot, and which layer (bundle / profile patch / home patch) defines it.
 - **Honest toggle.** Enable/disable goes through DSH's own `pluginManager` remote — the same write path the Plugins page uses — so layering, hot reload, rollback and `restart-required` / `overridden` outcomes behave exactly like DSH itself. The panel never writes YAML by hand.
 - **Runtime state, not just config.** Enabled/disabled is the configuration side; the row also shows the entry's `fiberPhase` (`active`, `failed`, …) and prints the startup diagnostic verbatim when a server fails to connect.
-- **Batch.** *Disable all*, *Keep selected only*, and *Restore last* (a snapshot is kept in `localStorage`, so it survives a page refresh). Batch actions run serially and report how many succeeded and how many failed — a failure is never presented as success.
+- **Batch.** *Disable all*, *Enable all*, *Keep selected only*, and *Restore last* (a snapshot is kept in `localStorage`, so it survives a page refresh), plus select-all / clear. Batch actions run serially and report how many succeeded and how many failed — a failure is never presented as success, and *keep selected only* refuses to run with nothing ticked rather than silently disabling everything.
 - **Cost estimate.** Press *Probe* (or *Probe all*) and the host half does a real MCP handshake + `tools/list` against that server, then reports the tool count and an estimated token footprint. The number is an estimate, deliberately labelled as one.
 - **Read-only rows stay read-only.** Rows DSH will not let a profile patch address (`readOnlyReason`) show a greyed switch with the reason as its tooltip.
 - **Bilingual** (`zh` / `en`), light and dark themes via the host design tokens.
@@ -89,7 +89,7 @@ MCP 的工具定义是**每轮请求都会发送**的。关掉今天不用的服
 - **按 `moduleName` 认条目**（`@deepseek-ai/dsh-mcp-client`），不猜 id 前缀；每行展示 `serverName`、`patchId`、传输方式、地址、调用超时、启动失败是否阻塞，以及它定义在哪一层。
 - **开关走 DSH 自己的 `pluginManager` remote**，和插件页是同一条写入路径：分层覆盖、热重载、回滚、`restart-required` / `overridden` 都跟 DSH 一致。面板**从不手写 YAML**。
 - **配置面 + 运行面**：`enabled` 之外还显示 `fiberPhase`；启动失败的条目会把报错原文展开。
-- **批量**：全关 / 只保留勾选 / 恢复上次（快照存 `localStorage`，刷新页面还在）。批量**串行执行**，如实汇报成功与失败的数量。
+- **批量**：全关 / 全开 / 只保留勾选 / 恢复上次（快照存 `localStorage`，刷新页面还在），外加全选与清空。批量**串行执行**，如实汇报成功与失败的数量；「只保留勾选」在一个都没勾时会**拒绝执行并提示**，而不是悄悄把服务器全关掉。
 - **代价量化**：点「检测」会真的做一次 MCP 握手 + `tools/list`，给出工具数与**估算** token（明确标注是估算）。
 - **只读保护**：DSH 不允许通过 profile patch 改动的条目，开关灰显并把原因放进 tooltip。
 - 中英双语，跟随宿主设计令牌适配明暗主题。
