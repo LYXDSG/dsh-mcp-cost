@@ -37,7 +37,7 @@ Manual install (no `dsh plugin`): copy the package into `<DSH_HOME>/profiles/<pr
 
 ```yaml
 - insert:
-    - id: mcp-manager
+    - id: mcp-cost
       name: dsh-mcp-cost
 ```
 
